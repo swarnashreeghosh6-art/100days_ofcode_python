@@ -1,7 +1,6 @@
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 import art
 import random
-#checking commit
 
 def shuffle():
     card= random.choice(cards)
@@ -14,6 +13,21 @@ def calculate_score(cards):
         cards.remove(11)
         cards.append(1)
     return score
+def compare(score_player,score_com):
+    if score_player == score_com:
+        return "DRAW🙃"
+    elif score_player == 0:
+        return "You win with a blackjack!🥳"
+    elif score_com == 0:
+        return "You lose!Dealer has blackjack!😢"
+    elif score_player > 21:
+        return "BUST!YOU WENT OVER😢"
+    elif score_com > 21:
+        return "OPPONENT WENT OVER.YOU WIN!🥳"
+    elif score_com == 21 or score_player < score_com:
+        return "YOU LOSE!😢"
+    else:
+        return "YOU WIN!🥳"
 
 def blackjack():
     print(art.logo)
@@ -29,55 +43,29 @@ def blackjack():
         player_cards.append(shuffle())
         com_cards.append(shuffle())
     score_player=calculate_score(player_cards)
-    print(f"Your cards = {player_cards}, Current score = {score_player}")
     score_com = calculate_score(com_cards)
-    print(f"Computer first card = {com_cards[0]}")
 
-    if score_player==0 and score_com==0:
-        print(f"Your final cards = {player_cards},  Final score = {score_player}")
-        print(f"Computer's final cards = {com_cards},  Computer's final score = {score_com}")
-        print("DRAW🙃")
-    elif score_player==0:
-        print(f"Your final cards = {player_cards},  Final score = {score_player}")
-        print(f"Computer's final cards = {com_cards},  Computer's final score = {score_com}")
-        print("You win with a blackjack!🥳")
-    elif score_com == 0:
-        print(f"Your final cards = {player_cards},  Final score = {score_player}")
-        print(f"Computer's final cards = {com_cards},  Computer's final score = {score_com}")
-        print("You lose!Dealer has blackjack!😢")
-    else:
-        condition = True
-        while score_player < 21 and condition:
+    game_over=False
+    while not game_over:
+        print(f"Your cards = {player_cards}, Current score = {score_player}")
+        print(f"Computer first card = {com_cards[0]}")
+        if score_player==0 or score_com==0 or score_player > 21:
+            game_over=True
+        else:
             y_n = input("Type 'y' to get another card,type 'n' to pass: ").lower()
             if y_n == "y":
                 player_cards.append(shuffle())
-                score_player=calculate_score(player_cards)
-                print(f"Your cards = {player_cards},  Current score = {score_player}")
-                print(f"Computer's first card = {com_cards[0]}")
+                score_player = calculate_score(player_cards)
             else:
-                condition = False
+                game_over=True
 
-            score_player=calculate_score(player_cards)
-        print(f"Your final cards = {player_cards},  Final score = {score_player}")
+    while score_com!=0 and score_com < 17:
+        com_cards.append(shuffle())
+        score_com = calculate_score(com_cards)
+    print(f"Your final cards = {player_cards},  Final score = {score_player}")
+    print(f"Computer's final cards = {com_cards},  Computer's final score = {score_com}")
+    print(compare(score_player,score_com))
 
-        while score_com<17:
-            com_cards.append(shuffle())
-            score_com = calculate_score(com_cards)
-        if score_com >21 and 11 in com_cards:
-            com_cards.remove(11)
-            com_cards.append(1)
-            score_com=calculate_score(com_cards)
-        print(f"Computer's final cards = {com_cards},  Computer's final score = {score_com}")
-        if score_player > 21:
-            print("BUST!YOU WENT OVER😢")
-        elif score_com > 21:
-            print("YOU WIN!🥳")
-        elif score_player==score_com:
-            print("DRAW🙃")
-        elif score_com == 21 or score_player < score_com:
-            print("YOU LOSE!😢")
-        else:
-            print("YOU WIN!🥳")
     play_again()
 
 blackjack()
