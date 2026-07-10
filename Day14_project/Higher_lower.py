@@ -13,17 +13,22 @@ def compare(a,b):
 done=[]
 score=0
 length=len(data)
+game_over=False
 condition=True
 
-while condition:
-    i = random.randint(0, length - 1)
-    while i in done:
+
+while not game_over:
+    while condition:
         i = random.randint(0, length - 1)
-    done.append(i)
-    j = random.randint(0, length - 1)
-    while j in done:
+        while i in done:
+            i = random.randint(0, length - 1)
+        done.append(i)
         j = random.randint(0, length - 1)
-    done.append(j)
+        while j in done:
+            j = random.randint(0, length - 1)
+        done.append(j)
+        condition=False
+
     A=data[i]["follower_count"]
     B = data[j]["follower_count"]
     Compare=compare(A,B)
@@ -32,15 +37,24 @@ while condition:
     print(art.vs)
     print(f"Compare B: {data[j]["name"]},{data[j]["description"]},from {data[j]["country"]}")
     A_or_B=input("Who has more followers? Type \"A\" or \"B\" : ").upper()
-    if A_or_B!=Compare:
+    if A_or_B==Compare:
+        print("You are correct!")
+        score+=1
+        print(f"Your current score is {score}")
+    else:
         print(f"Oops you are wrong!\nYour score is {score}")
-        condition=False
-    score += 1
+        game_over=True
+    i = j
+    j = random.randint(0, length - 1)
+    while j in done:
+        j = random.randint(0, length - 1)
+    done.append(j)
     if len(done)==len(data):
-        print(f"Your score is {score}")
         print("Game over")
-        condition=False
-    print("\n" * 30)
+        game_over=True
+
+
+
 
 
 
