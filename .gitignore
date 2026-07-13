@@ -1,4 +1,15 @@
+# PyCharm
 .idea/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Angela Yu course folders
 Day 1/
 Day 2/
 Day 3/
@@ -15,6 +26,6 @@ Day 13/
 Day 14/
 Day 15/
 Day 16-100/
+# Course metadata
 course-info.yaml
 course-remote-info.yaml
-__pycache__/
