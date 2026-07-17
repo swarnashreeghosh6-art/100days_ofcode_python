@@ -2,7 +2,6 @@ import turtle
 from turtle import Turtle,Screen
 import random
 timmy=Turtle()
-timmy.shape("arrow")
 timmy.hideturtle()
 timmy.speed(0)
 turtle.colormode(255)
